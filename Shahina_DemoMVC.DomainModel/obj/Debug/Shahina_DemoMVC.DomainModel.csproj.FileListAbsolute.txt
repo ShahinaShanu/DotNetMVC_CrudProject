@@ -1,0 +1,12 @@
+C:\Users\akole\Downloads\Shahina_DemoProjectMVC\Shahina_DemoMVC.DomainModel\bin\Debug\Shahina_DemoMVC.DomainModel.dll
+C:\Users\akole\Downloads\Shahina_DemoProjectMVC\Shahina_DemoMVC.DomainModel\bin\Debug\Shahina_DemoMVC.DomainModel.pdb
+C:\Users\akole\Downloads\Shahina_DemoProjectMVC\Shahina_DemoMVC.DomainModel\obj\Debug\Shahina_DemoMVC.DomainModel.csproj.AssemblyReference.cache
+C:\Users\akole\Downloads\Shahina_DemoProjectMVC\Shahina_DemoMVC.DomainModel\obj\Debug\Shahina_DemoMVC.DomainModel.csproj.CoreCompileInputs.cache
+C:\Users\akole\Downloads\Shahina_DemoProjectMVC\Shahina_DemoMVC.DomainModel\obj\Debug\Shahina_DemoMVC.DomainModel.dll
+C:\Users\akole\Downloads\Shahina_DemoProjectMVC\Shahina_DemoMVC.DomainModel\obj\Debug\Shahina_DemoMVC.DomainModel.pdb
+C:\Users\User\Desktop\Shahina_Bano_19Aug2024\Shahina_DemoProjectMVCUpdated\Shahina_DemoProjectMVC\Shahina_DemoMVC.DomainModel\bin\Debug\Shahina_DemoMVC.DomainModel.dll
+C:\Users\User\Desktop\Shahina_Bano_19Aug2024\Shahina_DemoProjectMVCUpdated\Shahina_DemoProjectMVC\Shahina_DemoMVC.DomainModel\bin\Debug\Shahina_DemoMVC.DomainModel.pdb
+C:\Users\User\Desktop\Shahina_Bano_19Aug2024\Shahina_DemoProjectMVCUpdated\Shahina_DemoProjectMVC\Shahina_DemoMVC.DomainModel\obj\Debug\Shahina_DemoMVC.DomainModel.csproj.AssemblyReference.cache
+C:\Users\User\Desktop\Shahina_Bano_19Aug2024\Shahina_DemoProjectMVCUpdated\Shahina_DemoProjectMVC\Shahina_DemoMVC.DomainModel\obj\Debug\Shahina_DemoMVC.DomainModel.csproj.CoreCompileInputs.cache
+C:\Users\User\Desktop\Shahina_Bano_19Aug2024\Shahina_DemoProjectMVCUpdated\Shahina_DemoProjectMVC\Shahina_DemoMVC.DomainModel\obj\Debug\Shahina_DemoMVC.DomainModel.dll
+C:\Users\User\Desktop\Shahina_Bano_19Aug2024\Shahina_DemoProjectMVCUpdated\Shahina_DemoProjectMVC\Shahina_DemoMVC.DomainModel\obj\Debug\Shahina_DemoMVC.DomainModel.pdb

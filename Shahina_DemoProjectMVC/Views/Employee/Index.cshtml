@@ -1,0 +1,377 @@
+﻿
+@model Shahina_DemoProjectMVC.Models.EmployeeVM
+
+@{
+    //ViewBag.Title = "Employee Registration";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@{
+    var today = DateTime.Now.AddDays(-1).Date.ToString("yyyy-MM-dd");
+}
+<style>
+    .required::after{
+        content:"*";
+        color:red;
+    }
+</style>
+<h2 class="text-info">@ViewBag.Title</h2>
+
+@using (Html.BeginForm("SaveEmployee", "Employee", FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-horizontal" }))
+{
+    @Html.AntiForgeryToken()
+
+    @Html.HiddenFor(model => model.Row_Id)
+
+    <div class="form-group d-flex p-2">
+        @Html.LabelFor(model => model.FirstName, new { @class = "control-label required col-md-2" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(model => model.FirstName, new { @class = "form-control", maxlength = "50" })
+            @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group d-flex p-2">
+        @Html.LabelFor(model => model.LastName, new { @class = "control-label required col-md-2" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(model => model.LastName, new { @class = "form-control", maxlength = "50" })
+            @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+
+    <div class="form-group d-flex p-2">
+        @Html.LabelFor(m => m.CountryId, "Country", new { @class = "control-label required col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownListFor(m => m.CountryId, Model.Countries, "Select Country", new { @class = "form-control", id = "CountryId" })
+            @Html.ValidationMessageFor(model => model.CountryId, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group d-flex p-2">
+        @Html.LabelFor(m => m.StateId, "State", new { @class = "control-label required col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownListFor(m => m.StateId, Model.States, "Select State", new { @class = "form-control", id = "StateId" })
+            @Html.ValidationMessageFor(model => model.StateId, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group d-flex p-2">
+        @Html.LabelFor(m => m.CityId, "City", new { @class = "control-label required col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownListFor(m => m.CityId, Model.Cities, "Select City", new { @class = "form-control", id = "CityId" })
+            @Html.ValidationMessageFor(model => model.CityId, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group d-flex p-2">
+        @Html.LabelFor(model => model.EmailAddress, new { @class = "control-label required col-md-2" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(model => model.EmailAddress, new { @class = "form-control", maxlength = "100", type = "email" })
+            @Html.ValidationMessageFor(model => model.EmailAddress, "", new { @class = "text-danger" })
+            <span class="text-danger" id="EmailAddress-error"></span>
+        </div>
+    </div>
+
+    <div class="form-group d-flex p-2">
+        @Html.LabelFor(model => model.MobileNumber, new { @class = "control-label required col-md-2" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(model => model.MobileNumber, new { @class = "form-control", maxlength = "10" ,type="number"})
+            @Html.ValidationMessageFor(model => model.MobileNumber, "", new { @class = "text-danger" })
+            <span class="text-danger" id="MobileNumber-error"></span>
+        </div>
+    </div>
+
+    <div class="form-group d-flex p-2">
+        @Html.LabelFor(model => model.PanNumber, new { @class = "control-label required col-md-2" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(model => model.PanNumber, new { @class = "form-control", maxlength = "12", style = "text-transform:uppercase;" })
+            @Html.ValidationMessageFor(model => model.PanNumber, "", new { @class = "text-danger" })
+            <span class="text-danger" id="PanNumber-error"></span>
+        </div>
+    </div>
+
+    <div class="form-group d-flex p-2">
+        @Html.LabelFor(model => model.PassportNumber, new { @class = "control-label required col-md-2" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(model => model.PassportNumber, new { @class = "form-control", maxlength = "20", style = "text-transform:uppercase;" })
+            @Html.ValidationMessageFor(model => model.PassportNumber, "", new { @class = "text-danger" })
+            <span class="text-danger" id="PassportNumber-error"></span>
+        </div>
+    </div>
+    <div class="form-group d-flex p-2">
+        @Html.LabelFor(model => model.ProfileImage, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @if (!string.IsNullOrEmpty(Model.ProfileImage))
+            {
+                <img src="@Url.Content("~/Uploads/Employee/" + Model.ProfileImage)" alt="Current Profile Image" style="width:100px;height:100px;" />
+            }
+            <input type="file" name="ProfileImage" id="ProfileImage" accept="image/jpeg, image/png" />
+            @Html.ValidationMessageFor(model => model.ProfileImage, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    @*<div class="form-group d-flex p-2">
+                @Html.LabelFor(model => model.ProfileImage, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    <input type="file" name="ProfileImage" id="ProfileImage" accept="image/jpeg, image/png" />
+                    @Html.ValidationMessageFor(model => model.ProfileImage, "", new { @class = "text-danger" })
+                </div>
+        </div>*@
+    <div class="form-group d-flex p-2">
+        <div class="control-label required col-md-2">
+            @Html.LabelFor(model => model.Gender, "Gender")
+        </div>
+        <div class="col-md-10">
+            <label class="radio-inline">
+                @Html.RadioButtonFor(model => model.Gender, "1") Male
+            </label>
+            <label class="radio-inline">
+                @Html.RadioButtonFor(model => model.Gender, "2") Female
+            </label>
+            @Html.ValidationMessageFor(model => model.Gender, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group d-flex p-2">
+        @Html.LabelFor(model => model.DateOfBirth, new { @class = "control-label required col-md-2" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(model => model.DateOfBirth, "{0:yyyy-MM-dd}", new { @class = "form-control", @id = "DateOfBirth", type = "date", max = today })
+            @Html.ValidationMessageFor(model => model.DateOfBirth, "", new { @class = "text-danger" })
+            <span class="text-danger" id="DateOfBirth-error"></span>
+        </div>
+    </div>
+
+    <div class="form-group d-flex p-2">
+        @Html.LabelFor(model => model.DateOfJoinee, new { @class = "control-label required col-md-2" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(model => model.DateOfJoinee, "{0:yyyy-MM-dd}", new { @class = "form-control", @id = "DateOfJoinee", type = "date", max = today })
+            @Html.ValidationMessageFor(model => model.DateOfJoinee, "", new { @class = "text-danger" })
+            <span class="text-danger" id="DateOfJoinee-error"></span>
+        </div>
+    </div>
+    <div class="form-group d-flex p-2">
+        @Html.LabelFor(model => model.IsActive, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.CheckBoxFor(model => model.IsActive)
+            @Html.ValidationMessageFor(model => model.IsActive, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group d-flex p-2">
+        <div class="col-md-2"></div>
+        <div class="col-md-offset-2 col-md-10">
+            <button type="submit" value="Save" id="submit" class="btn btn-primary">
+                @if (Model.Row_Id > 0)
+                {
+                    @Html.Raw("Update")
+                }
+                else
+                {
+                    @Html.Raw("Save")
+                }
+            </button>
+            <button type="button" class="btn btn-secondary" onclick="resetForm()">Clear</button>
+            <button type="button" class="btn btn-secondary" onclick="CancelForm()">Cancel</button>
+        </div>
+    </div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script>
+        function resetForm() {
+            document.querySelector('form').reset();
+
+        }
+
+        function CancelForm()
+        {
+            var url;
+            url = "/Employee/EmployeeList";
+            window.location.href = url;
+        }
+        $(document).ready(function ()
+        {
+            $('#DateOfBirth').on('change', function () {
+                validateDates();
+            });
+
+            $('#DateOfJoinee').on('change', function () {
+                validateDates();
+            });
+            function validateDates()
+            {
+                var dob = new Date($('#DateOfBirth').val());
+                var doj = new Date($('#DateOfJoinee').val());
+                var today = new Date();
+                var age = today.getFullYear() - dob.getFullYear();
+                if (doj <= dob) {
+                    //alert("Date of Joining should be greater than date of birth");
+                    $('#DateOfJoinee-error').text("Date of Joining should be greater than date of birth");
+                    $('#submit').prop("disabled", true);
+                }
+                else if (age < 18) {
+                    $('#DateOfBirth-error').text("Date of birth should be valid");
+                    $('#submit').prop("disabled", true);
+                }
+                else {
+                    $('#DateOfJoinee-error').text('');
+                    $('#DateOfBirth-error').text('');
+                    $('#submit').prop("disabled", false);
+                }
+               
+            }
+
+        $('#CountryId').change(function () {
+                var countryId = $(this).val();
+                if (countryId) {
+                    $.ajax({
+                        url: '@Url.Action("GetStates", "Employee")',
+                        type: 'GET',
+                        data: { countryId: countryId },
+                        success: function (data) {
+                            var $stateDropdown = $('#StateId');
+                            $stateDropdown.empty().append('<option value="">Select State</option>');
+                            $.each(data, function (index, item) {
+                                $stateDropdown.append($('<option></option>').val(item.Value).text(item.Text));
+                            });
+                            $('#CityId').empty().append('<option value="">Select City</option>');
+                        }
+                    });
+                } else {
+                    $('#StateId').empty().append('<option value="">Select State</option>');
+                    $('#CityId').empty().append('<option value="">Select City</option>');
+                }
+        });
+
+        $('#StateId').change(function () {
+                var stateId = $(this).val();
+                if (stateId) {
+                    $.ajax({
+                        url: '@Url.Action("GetCities", "Employee")',
+                        type: 'GET',
+                        data: { stateId: stateId },
+                        success: function (data) {
+                            var $cityDropdown = $('#CityId');
+                            $cityDropdown.empty().append('<option value="">Select City</option>');
+                            $.each(data, function (index, item) {
+                                $cityDropdown.append($('<option></option>').val(item.Value).text(item.Text));
+                            });
+                        }
+                    });
+                } else {
+                    $('#CityId').empty().append('<option value="">Select City</option>');
+                }
+        });
+
+        $('#EmailAddress').blur(function() {
+        var emailAddress = $(this).val();
+        $.ajax({
+            url: '@Url.Action("CheckEmailExists", "Employee")',
+            type: 'GET',
+            data: { emailAddress: emailAddress },
+            success: function(result) {
+                if (!result) {
+                    $('#EmailAddress').removeClass('field-validation-error');
+                    $('#EmailAddress').addClass('input-validation-error');
+                    $('#EmailAddress-error').text('Email address already exists.');
+                    $('#submit').prop("disabled", true);
+                } else {
+                    $('#EmailAddress').removeClass('field-validation-error');
+                    $('#EmailAddress').removeClass('input-validation-error');
+                    $('#EmailAddress-error').text('');
+                    $('#submit').prop("disabled", false);
+                }
+            }
+        });
+        });
+
+        $('#MobileNumber').blur(function() {
+            var mobileNumber = $(this).val();
+            //var mobileNumber = $('#MobileNumber').val();
+            var pattern = /^[0-9]{10}$/;
+            if (mobileNumber) {
+                if (!pattern.test(mobileNumber)) {
+                    $('#MobileNumber-error').text("Mobile number should be valid 10 digits numbers");
+                    $('#submit').prop("disabled", true);
+                    return false;
+                }
+                else {
+                    $('#MobileNumber-error').text('');
+                    $('#submit').prop("disabled", false);
+                }
+            }
+        $.ajax({
+            url: '@Url.Action("CheckMobileNumberExists", "Employee")',
+            type: 'GET',
+            data: { mobileNumber: mobileNumber },
+            success: function (result) {
+                //debugger;
+                if (!result) {
+                    $('#MobileNumber').removeClass('field-validation-error');
+                    $('#MobileNumber').addClass('input-validation-error');
+                    $('#MobileNumber-error').text('Mobile Number already exists.');
+                    $('#submit').prop("disabled", true);
+                } else {
+                    $('#MobileNumber').removeClass('field-validation-error');
+                    $('#MobileNumber').removeClass('input-validation-error');
+                    $('#MobileNumber-error').text('');
+                    $('#submit').prop("disabled", false);
+                }
+            }
+        });
+        });
+
+            $('#PanNumber').blur(function() {
+        var panNumber = $(this).val();
+        $.ajax({
+            url: '@Url.Action("CheckPanNumberExists", "Employee")',
+            type: 'GET',
+            data: { panNumber: panNumber },
+            success: function(result) {
+                if (!result) {
+                    $('#PanNumber').removeClass('field-validation-error');
+                    $('#PanNumber').addClass('input-validation-error');
+                    $('#PanNumber-error').text('PAN number already exists.');
+                    $('#submit').prop("disabled", true);
+                } else {
+                    $('#PanNumber').removeClass('field-validation-error');
+                    $('#PanNumber').removeClass('input-validation-error');
+                    $('#PanNumber-error').text('');
+                    $('#submit').prop("disabled", false);
+                }
+            }
+        });
+    });
+
+    // Check Passport Number
+    $('#PassportNumber').blur(function() {
+        var passportNumber = $(this).val();
+        $.ajax({
+            url: '@Url.Action("CheckPassportNumberExists", "Employee")',
+            type: 'GET',
+            data: { passportNumber: passportNumber },
+            success: function(result) {
+                if (!result) {
+                    $('#PassportNumber').removeClass('field-validation-error');
+                    $('#PassportNumber').addClass('input-validation-error');
+                    $('#PassportNumber-error').text('Passport number already exists.');
+                    $('#submit').prop("disabled", true);
+
+                } else {
+                    $('#PassportNumber').removeClass('field-validation-error');
+                    $('#PassportNumber').removeClass('input-validation-error');
+                    $('#PassportNumber-error').text('');
+                    $('#submit').prop("disabled", false);
+                }
+            }
+        });
+    });
+        });
+
+
+    </script>
+}
+
+
+

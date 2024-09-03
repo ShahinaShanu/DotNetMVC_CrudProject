@@ -1,0 +1,204 @@
+﻿@{
+    if (TempData["SuccessMessage"] != null)
+    {
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                Swal.fire({
+                    title: 'Success!',
+                    text: '@TempData["SuccessMessage"]',
+                    icon: 'success',
+                    confirmButtonText: 'OK'
+                }).then((result) => {
+                    // Redirect after SweetAlert is closed
+                    if (result.isConfirmed) {
+                        window.location.href = '@Url.Action("EmployeeList")';
+                    }
+                });
+            });
+        </script>
+        @*<div class="alert alert-success">
+            @TempData["SuccessMessage"]
+        </div>*@
+    }
+
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Employee List</title>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    @*<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css" />*@
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" />
+    @*<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css" />*@
+
+    <style>
+        table.dataTable {
+            width: 100%;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="d-flex p-0 m-0">
+        <div class="col-6 ml-3">
+            <h2 class="text-info">Employee List</h2>
+        </div>
+        <div class="col-2 offset-6">
+            @*<a asp-action="index" asp-controller="Employee" class="btn btn-info form-control text-white">*@
+            @Html.ActionLink("Add Employee", "Index", "Employee", new { area = "" }, new { @class = "btn btn-info form-control text-white" })
+
+            @*</a>*@
+        </div>
+    </div>
+    <div class="container mt-4">
+        @*<h2>Employee List</h2>*@
+        <div class="col-md-12 p-3">
+            <table id="employeeTable" class="table table-striped table-bordered">
+                <thead>
+                    <tr>
+                        <th>Employee Code</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Gender</th>
+                        <th>Email Address</th>
+                        <th>Passport Number</th>
+                        <th>PAN Number</th>
+                        <th>Country</th>
+                        <th>State</th>
+                        <th>City</th>
+                        <th>Profile Image</th>
+                        <th>Is Active</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                @*<tbody>
+                    </tbody>*@
+            </table>
+        </div>
+    </div>
+    <script src="~/Scripts/jquery-3.7.0.min.js"></script>
+    <script src="~/Scripts/jquery.dataTables.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+
+
+    <script>
+   $(document).ready(function() {
+            GetEmployeeData();
+        });
+
+function GetEmployeeData()
+{
+    $.noConflict();
+     $('#employeeTable').DataTable({
+    "ajax": {
+        "url": "@Url.Action("GetEmployeeList", "Employee")",
+        "type": "GET",
+        "dataType": "json",
+        "dataSrc":'data',
+        //"success": function (data) {
+        //    alert('e');
+        //},
+        "error": function (xhr, status, error) {
+            alert('Error getting data: ' + error);
+        }
+    },
+         "order": [[0, 'desc']],  // Order by the Id column (which will be hidden)
+         "columnDefs": [
+             {
+                 "targets": 0,   // The Id column
+                 "visible": false,  // Hide the Id column
+                 "searchable": false  // Also make it non-searchable (optional)
+             },
+             {
+                 "targets": [12],  // Example to disable sorting on the 12th column
+                 "orderable": false,
+                 "searchable": false
+             }],
+    "columns": [
+        { "data": "EmpCode", "name": "EmpCode" },
+        { "data": "FirstName", "name": "FirstName" },
+        { "data": "LastName" ,"name":"LastName"},
+        { "data": "Gender" ,"name":"Gender"},
+        { "data": "EmailAddress", "name":"EmailAddress"},
+        { "data": "PassportNumber", "name":"PassportNumber"},
+        { "data": "PanNumber", "name":"PanNumber" },
+        { "data": "CountryName", "name": "CountryName"},
+        { "data": "StateName", "name":"StateName" },
+        { "data": "CityName", "name": "CityName"},
+        {
+            "data": "ProfileImage", "name":"ProfileImage",
+            "render": function (data) {
+                if (data == "" || data == null) { return "No image" }
+                else
+                { return '<img src="/Uploads/Employee/' + data + '" alt="Profile Image" style="width:50px;height:50px;"/>'; }
+
+            }
+        },
+        {
+            "data": "IsActive", "name": "IsActive"
+        },
+        {
+            "data": null, "className":"text-center",
+            "render": function(data, type, row) {
+                return `
+                    <a href="/Employee/EmployeeDetailsById/${row.Id}"><i class="fas fa-edit"></i></a>
+                    <a href="#" onclick="Delete(${row.Id});"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                `;
+            }
+        }
+    ],
+    //"destroy": true,
+    "processing":true,
+    "paging": true,
+    "searching": true,
+    "ordering": true,
+    "responsive": true,
+    //"lengthChange": true,
+    "pageLength": 10,
+    "language": {
+        "emptyTable": "No data available in table"
+
+         }, "width": "100%"
+      });
+    }
+
+        function Delete(id) {
+            console.log(id);
+            Swal.fire({
+                title: 'Are you sure?',
+                text: 'Once deleted, you will not be able to recover',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        type: "POST",
+                        url: '/Employee/DeleteEmployee/' + id,
+                        success: function (data) {
+                            if (data.success) {
+                                toastr.success(data.message);
+                                $('#employeeTable').DataTable().ajax.reload(); // Reload table
+                            } else {
+                                toastr.error(data.message);
+                            }
+                        },
+                        error: function (xhr, status, error) {
+                            toastr.error("An error occurred: " + error);
+                        }
+                    });
+                }
+            });
+        }
+
+    </script>
+
+</body>
+</html>
